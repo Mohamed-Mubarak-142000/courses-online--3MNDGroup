@@ -1,0 +1,61 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "title": "Introduction to Python",
+      "description": "Learn the basics of Python programming, including syntax, data types, and functions.",
+      "duration": "4 weeks",
+      "level": "Beginner",
+      "instructor": "John Doe",
+      "topics": [
+        "Variables and Data Types",
+        "Control Flow",
+        "Functions",
+        "Working with Files"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Web Development with React",
+      "description": "Build modern web applications using React, JSX, components, and hooks.",
+      "duration": "6 weeks",
+      "level": "Intermediate",
+      "instructor": "Jane Smith",
+      "topics": [
+        "JSX and Components",
+        "State and Props",
+        "React Router",
+        "API Integration"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Data Science with Python",
+      "description": "Explore data analysis, visualization, and machine learning using Python libraries.",
+      "duration": "8 weeks",
+      "level": "Advanced",
+      "instructor": "Alice Johnson",
+      "topics": [
+        "Pandas and DataFrames",
+        "Data Visualization with Matplotlib",
+        "Machine Learning with Scikit-learn",
+        "Natural Language Processing"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Full-Stack JavaScript",
+      "description": "Learn to build full-stack applications using JavaScript, Node.js, Express, and MongoDB.",
+      "duration": "10 weeks",
+      "level": "Advanced",
+      "instructor": "Michael Brown",
+      "topics": [
+        "JavaScript ES6+",
+        "Node.js and Express",
+        "RESTful APIs",
+        "MongoDB and Mongoose",
+        "Authentication and Authorization"
+      ]
+    }
+  ]
+}
