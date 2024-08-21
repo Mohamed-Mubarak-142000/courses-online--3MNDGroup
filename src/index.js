@@ -11,6 +11,12 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { HelmetProvider } from "react-helmet-async";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ApiContextProvider from "./store/ApiContext";
+import Blogs from "./pages/Blogs";
+import Frq from "./pages/Frq";
+import Inroll from "./pages/Inroll";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +27,15 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
       { path: "/courses", element: <Courses /> },
-      { path: "/courses/:courseId", element: <DetialsCourse /> },
+      { path: "/blog", element: <Blogs /> },
+      { path: "/frq", element: <Frq /> },
+      {
+        path: "/courses/:courseId",
+        element: <DetialsCourse />,
+      },
     ],
   },
+  { path: "/inroll/:courseId", element: <Inroll /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
   { path: "*", element: <div>Not Found</div> },
@@ -34,10 +46,12 @@ const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
-        <RouterProvider router={router} />
-      </HelmetProvider>
-    </QueryClientProvider>
+    <ApiContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <RouterProvider router={router} />
+        </HelmetProvider>
+      </QueryClientProvider>
+    </ApiContextProvider>
   </React.StrictMode>
 );

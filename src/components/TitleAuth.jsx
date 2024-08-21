@@ -15,14 +15,11 @@ const TitleAuth = () => {
       }}
     >
       <div className="w-[400px] text-5xl font-semibold text-primary_text">
-        <h2>Selangkah Lebih Dekat Dengan Impianmu</h2>
+        <h2>One Step Closer To Your dream</h2>
       </div>
 
       <div className="w-[400px] text-xl text-secondary_text">
-        <h5>
-          Sebuah layanan E-Learning gratis yang siap membantumu menjadi seorang
-          ahli{" "}
-        </h5>
+        <h5>A free e-learning service ready to help you become an expert </h5>
       </div>
     </Grid>
   );

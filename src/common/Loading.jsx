@@ -10,12 +10,13 @@ const Loading = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
+        overflow: "hidden",
         width: "100%",
-        position: "absolute",
+        position: "fixed",
         top: 0,
         left: 0,
         backgroundColor: "rgba(0, 0, 0, 0.5)", // Optional: background color for better visibility
-        zIndex: 1000, // Ensures it appears above other content
+        zIndex: 100000, // Ensures it appears above other content
       }}
     >
       <CircularProgress color="secondary" />

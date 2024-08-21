@@ -24,3 +24,27 @@ body {
   /* smooth scroll  */
   scroll-behavior: smooth;
 }
+
+.header {
+  @apply w-full fixed z-50 inset-0 h-20 m-0 bg-[#1C1E53]
+        flex justify-between items-center md:px-10 lg:px-16 px-3;
+}
+
+.header.move {
+  @apply bg-[#1C1E53] shadow-xl transition-all duration-1000;
+}
+
+.container {
+  @apply w-full mx-auto md:w-[90%] lg:w-[80%] p-5;
+}
+
+.numberStyling::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 7px;
+  height: 30px;
+  background-color: #fcd980;
+  border-radius: 0px 5px 0 0;
+}
