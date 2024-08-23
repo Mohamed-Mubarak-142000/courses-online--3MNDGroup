@@ -1,6 +1,7 @@
 import React from "react";
 import ReorderIcon from "@mui/icons-material/Reorder";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -57,7 +58,7 @@ export default function Header() {
       <nav
         className={`flex justify-center items-center gap-5 text-capitalize md:flex-row flex-col md:static transition-all duration-500 fixed 
       inset-0 top-20 ${
-        isMenuOpen ? "h-64" : "h-0"
+        isMenuOpen ? "h-80" : "h-0"
       } md:h-auto overflow-hidden bg-primary md:bg-transparent shadow-2xl md:shadow-none`}
       >
         {Links.map((link) => (
@@ -70,6 +71,16 @@ export default function Header() {
             {link.title}
           </NavLink>
         ))}
+
+        {/***login button */}
+
+        <Link
+          to={"/login"}
+          variant="contained"
+          className="w-1/3  md:w-2/5 border py-3 px-4 text-base text-white bg-secondary md:text-text_dark font-bold rounded-lg md:bg-primary  text-center"
+        >
+          Login
+        </Link>
       </nav>
     </header>
   );

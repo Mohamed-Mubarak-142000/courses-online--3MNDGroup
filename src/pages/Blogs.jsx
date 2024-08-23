@@ -8,7 +8,7 @@ const Blogs = () => {
 
   return (
     <section className="mx-2 lg:mx-12 min-h-[100vh] mt-28 ">
-      <AllBlogs />;
+      <AllBlogs />
     </section>
   );
 };
