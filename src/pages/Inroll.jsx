@@ -19,6 +19,7 @@ import { CircularProgress, Typography } from "@mui/material";
 import TabsSection from "../components/TabsSection";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Helmet } from "react-helmet-async";
 
 const drawerWidth = 300;
 
@@ -101,6 +102,9 @@ const Inroll = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Enroll Page </title>
+      </Helmet>
       <Header />
       <section className="min-h-[100vh] flex items-center justify-center mt-16">
         <Box sx={{ display: "flex" }}>

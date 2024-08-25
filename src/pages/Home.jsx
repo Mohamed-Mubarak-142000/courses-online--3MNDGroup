@@ -9,6 +9,7 @@ import Testimonials from "../components/Testimonials";
 import Frequantly from "../components/Frequantly";
 import Register from "./../auth/Register";
 import Blog from "../components/Blog";
+import { Helmet } from "react-helmet-async";
 const Home = () => {
   //LOADING before rendering
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,9 @@ const Home = () => {
   }
   return (
     <>
+      <Helmet>
+        <title>Home Page</title>
+      </Helmet>
       <Hero />
       <Statistic />
       <Benefits />

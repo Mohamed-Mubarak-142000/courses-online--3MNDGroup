@@ -6,6 +6,7 @@ import { CircularProgress, Grid } from "@mui/material";
 import InformationDetailsCourse from "../components/InformationDetailsCourse";
 import Recommendations from "./../components/Recommendations";
 import TabsSection from "../components/TabsSection";
+import { Helmet } from "react-helmet-async";
 
 const DetailsCourse = () => {
   const { courseId } = useParams();
@@ -39,25 +40,30 @@ const DetailsCourse = () => {
   }
 
   return (
-    <section className="my-28 mx-2 lg:mx-12">
-      {/** Details section */}
-      <Grid container spacing={2}>
-        <Grid item={true} xs={12} md={6}>
-          <img
-            src={imageMemo}
-            alt="course"
-            className="w-full h-full object-cover rounded-3xl"
-          />
+    <>
+      <Helmet>
+        <title>Detail Courses</title>
+      </Helmet>
+      <section className="my-28 mx-2 lg:mx-12">
+        {/** Details section */}
+        <Grid container spacing={2}>
+          <Grid item={true} xs={12} md={6}>
+            <img
+              src={imageMemo}
+              alt="course"
+              className="w-full h-full object-cover rounded-3xl"
+            />
+          </Grid>
+          {data?.data && <InformationDetailsCourse data={data.data} />}
         </Grid>
-        {data?.data && <InformationDetailsCourse data={data.data} />}
-      </Grid>
 
-      {/** Tabs section */}
-      <TabsSection data={data} courseId={courseId} />
+        {/** Tabs section */}
+        <TabsSection data={data} courseId={courseId} />
 
-      {/** Recommendations section */}
-      <Recommendations />
-    </section>
+        {/** Recommendations section */}
+        <Recommendations />
+      </section>
+    </>
   );
 };
 

@@ -1,20 +1,47 @@
 import React from "react";
-import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Box,
+  Button,
+} from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import { Link } from "react-router-dom";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import AlertNotification from "./AlertNotification";
 
 const CourseCard = ({ course }) => {
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const isLogin = false; // Change based on actual login state
+
+  const handleAddToCart = () => {
+    if (!isLogin) {
+      setOpenAlert(true);
+    } else {
+      // Add to cart logic here
+    }
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  };
+
   return (
-    <Link to={`/courses/${course.id}`}>
+    <>
       <Card
         sx={{
-          maxWidth: 345,
+          maxWidth: "400px",
           mt: 2,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           height: 450,
+          boxShadow: 3,
+          borderRadius: 2,
         }}
       >
         <CardMedia
@@ -28,23 +55,75 @@ const CourseCard = ({ course }) => {
             objectFit: "cover",
           }}
         />
-        <CardContent
-          sx={{
-            flexGrow: 1,
-          }}
+        <Link
+          to={`/courses/${course.id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
         >
-          <Typography gutterBottom variant="h5" component="div">
-            {course.title}
-          </Typography>
+          <CardContent
+            sx={{
+              flexGrow: 1,
+            }}
+          >
+            <Typography gutterBottom variant="h5" component="div">
+              {course.title}
+            </Typography>
 
-          <Typography variant="body2" color="text.secondary" paragraph>
-            {course.description}
-          </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              {course.description}
+            </Typography>
 
-          <Typography gutterBottom variant="body2" component="div">
-            {course.date}
-          </Typography>
-        </CardContent>
+            <Typography gutterBottom variant="body2" component="div">
+              {course.date}
+            </Typography>
+          </CardContent>
+        </Link>
+
+        {/* Buttons: Add to Cart and Wishlist */}
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ p: 1 }}
+        >
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              fontWeight: "bold",
+              fontSize: "14px",
+              border: "1px solid #1976d2", // Match with primary color
+            }}
+            onClick={handleAddToCart}
+          >
+            <ShoppingBagIcon />
+            Add to Cart
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="small"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              borderRadius: "50%",
+              minWidth: "40px",
+              height: "40px",
+              border: "1px solid #f50057", // Match with secondary color
+            }}
+          >
+            <FavoriteBorderOutlinedIcon
+              sx={{ color: "#f50057", fontSize: "25px" }} // Match with secondary color
+            />
+          </Button>
+        </Box>
+
         <Box
           display="flex"
           justifyContent="space-between"
@@ -63,7 +142,13 @@ const CourseCard = ({ course }) => {
           </Box>
         </Box>
       </Card>
-    </Link>
+
+      <AlertNotification
+        open={openAlert}
+        handleClose={handleCloseAlert}
+        message="Please login to add to cart"
+      />
+    </>
   );
 };
 
