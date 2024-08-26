@@ -46,7 +46,7 @@ export default function Header() {
     { path: "/about", title: "About" },
     { path: "/courses", title: "Courses" },
     { path: "/blog", title: "Blog" },
-    { path: "/frq", title: "Frq" },
+    { path: "/frq", title: "FAQ" },
   ];
 
   return (
