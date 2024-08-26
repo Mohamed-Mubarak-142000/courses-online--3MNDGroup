@@ -21,12 +21,12 @@
 }
 
 body {
-  /* smooth scroll  */
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 .header {
-  @apply w-full fixed z-50 inset-0 h-20 m-0 bg-[#1C1E53]
+  @apply w-full fixed z-50 inset-0 h-20 m-0 bg-[#1C1E53] 
         flex justify-between items-center md:px-10 lg:px-16 px-3;
 }
 

@@ -1,7 +1,7 @@
 {
   "courses": [
     {
-      "id": 7,
+      "id": "7",
       "title": "Introduction to Machine Learning",
       "description": "Get started with machine learning and build predictive models using Python.",
       "duration": "10 weeks",
@@ -59,7 +59,7 @@
       "price": 109.99
     },
     {
-      "id": 1,
+      "id": "1",
       "title": "Introduction to Python",
       "description": "Learn the basics of Python programming, including syntax, data types, and functions.",
       "duration": "4 weeks",
@@ -117,7 +117,7 @@
       "price": 99.99
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Python for Data Analysis",
       "description": "Dive deeper into Python programming with a focus on data analysis and manipulation.",
       "duration": "5 weeks",
@@ -175,7 +175,7 @@
       "price": 129.99
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Web Development with React",
       "description": "Build modern web applications using React, JSX, components, and hooks.",
       "duration": "6 weeks",
@@ -233,7 +233,7 @@
       "price": 149.99
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "Advanced React Techniques",
       "description": "Master advanced concepts in React, including state management and performance optimization.",
       "duration": "7 weeks",
@@ -291,7 +291,7 @@
       "price": 179.99
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Data Science with Python",
       "description": "Explore data analysis, visualization, and machine learning using Python libraries.",
       "duration": "8 weeks",
@@ -349,7 +349,7 @@
       "price": 199.99
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Introduction to Machine Learning",
       "description": "Get started with machine learning and build predictive models using Python.",
       "duration": "10 weeks",
@@ -407,7 +407,7 @@
       "price": 109.99
     },
     {
-      "id": 8,
+      "id": "8",
       "title": "Python for Data Analysis",
       "description": "Dive deeper into Python programming with a focus on data analysis and manipulation.",
       "duration": "5 weeks",
@@ -481,7 +481,8 @@
           "rating": 4,
           "comment": "Good course, but I wish there were more exercises."
         }
-      ]
+      ],
+      "id": "c3f1"
     },
     {
       "courseId": 5,
@@ -498,7 +499,8 @@
           "rating": 4,
           "comment": "Very informative, but the pace was a bit fast."
         }
-      ]
+      ],
+      "id": "d26d"
     },
     {
       "courseId": 2,
@@ -515,7 +517,8 @@
           "rating": 4,
           "comment": "Great content, but some sections could use more detail."
         }
-      ]
+      ],
+      "id": "12a3"
     },
     {
       "courseId": 6,
@@ -532,7 +535,8 @@
           "rating": 4,
           "comment": "Highly detailed course, but not for beginners."
         }
-      ]
+      ],
+      "id": "fd39"
     },
     {
       "courseId": 3,
@@ -549,7 +553,8 @@
           "rating": 4,
           "comment": "Good content, but it could have included more real-world examples."
         }
-      ]
+      ],
+      "id": "14b0"
     },
     {
       "courseId": 4,
@@ -566,7 +571,62 @@
           "rating": 4,
           "comment": "Very thorough, but it could use more interactive exercises."
         }
-      ]
+      ],
+      "id": "bc26"
+    }
+  ],
+  "users": [
+    {
+      "id": "a7561",
+      "email": "admin@gmail.com",
+      "password": "123456",
+      "role": "admin",
+      "wishList": [],
+      "cart": []
+    },
+    {
+      "id": "a7562",
+      "email": "user2@gmail.com",
+      "password": "123456",
+      "role": "user",
+      "wishList": [],
+      "cart": []
+    },
+    {
+      "id": "e17a",
+      "username": "user3",
+      "email": "user3@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "b676",
+      "username": "marwa2001",
+      "email": "marwa2001@gmail.com",
+      "password": "2001"
+    },
+    {
+      "id": "eb7c",
+      "username": "mub2000",
+      "email": "mub2000@gmail.com",
+      "password": "2000"
+    },
+    {
+      "id": "a450",
+      "username": "user4",
+      "email": "user4@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "2392",
+      "username": "user5",
+      "email": "user5@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "18f4",
+      "username": "user6",
+      "email": "user6@gmail.com",
+      "password": "123456"
     }
   ]
 }

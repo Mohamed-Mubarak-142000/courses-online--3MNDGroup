@@ -1,15 +1,34 @@
-// FormAuth.js
 import { Grid, Button, Typography } from "@mui/material";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import TextInput from "./TextInput";
 import PasswordInput from "./PasswordInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useCustomMutation from "./../hooks/useCustomMutation";
+import AlertSnackbar from "./AlertSnackbar";
+import { ApiContext } from "../store/ApiContext";
 
 const FormRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [emailData, setEmailData] = useState("");
   const [passwordData, setPasswordData] = useState("");
   const [userNameData, setUserNameData] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // 'success' or 'error'
+  const navigate = useNavigate();
+  const { user } = useContext(ApiContext);
+
+  const { isLoading, mutate } = useCustomMutation({
+    title: "Register",
+    endPoint: "users",
+  });
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+      console.log(user);
+    }
+  }, [user, navigate]);
 
   const handleClickShowPassword = useCallback(() => {
     setShowPassword((prevShow) => !prevShow);
@@ -22,24 +41,36 @@ const FormRegister = () => {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      console.log(emailData, passwordData);
+      const registrationData = {
+        username: userNameData,
+        email: emailData,
+        password: passwordData,
+      };
+      try {
+        mutate(registrationData);
+        setSnackbarMessage("Registration successful!");
+        setSnackbarSeverity("success");
+        navigate("/login");
+      } catch (error) {
+        console.error(error);
+        setSnackbarMessage("Registration failed. Please try again.");
+        setSnackbarSeverity("error");
+      }
+      setOpenSnackbar(true);
     },
-    [emailData, passwordData]
+    [emailData, passwordData, userNameData, navigate, mutate]
   );
 
   const handleChangeEmail = useCallback((event) => {
     setEmailData(event.target.value);
-    console.log(event.target.value);
   }, []);
 
   const handleChangePassword = useCallback((event) => {
     setPasswordData(event.target.value);
-    console.log(event.target.value);
   }, []);
 
   const handleChangeUserName = useCallback((event) => {
     setUserNameData(event.target.value);
-    console.log(event.target.value);
   }, []);
 
   return (
@@ -61,7 +92,7 @@ const FormRegister = () => {
           Register
         </Typography>
         <Typography variant="h6" gutterBottom sx={{ color: "#fff" }}>
-          Please enter your credentials to login.
+          Please enter your credentials to register.
         </Typography>
 
         <TextInput
@@ -99,8 +130,9 @@ const FormRegister = () => {
               backgroundColor: "#e2ba53",
             },
           }}
+          disabled={isLoading} // Disable button while loading
         >
-          Register
+          {isLoading ? "Registering..." : "Register"}
         </Button>
 
         <Typography
@@ -116,10 +148,17 @@ const FormRegister = () => {
         >
           Do have an account?{" "}
           <Link to="/login" className="font-bold underline text-primary">
-            login now
+            Login now
           </Link>
         </Typography>
       </form>
+
+      <AlertSnackbar
+        open={openSnackbar}
+        onClose={() => setOpenSnackbar(false)}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+      />
     </Grid>
   );
 };

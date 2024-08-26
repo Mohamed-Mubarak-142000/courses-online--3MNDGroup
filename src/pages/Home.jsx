@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Loading from "../common/Loading";
 import Hero from "../components/Hero";
 import Statistic from "../components/Statistic";
@@ -10,14 +10,25 @@ import Frequantly from "../components/Frequantly";
 import Register from "./../auth/Register";
 import Blog from "../components/Blog";
 import { Helmet } from "react-helmet-async";
+import { ApiContext } from "../store/ApiContext";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   //LOADING before rendering
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(ApiContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+      console.log(user);
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 3000);
   }, []);
 
   useEffect(() => {

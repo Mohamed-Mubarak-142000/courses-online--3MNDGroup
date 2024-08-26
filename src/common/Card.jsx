@@ -12,22 +12,16 @@ import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import { Link } from "react-router-dom";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import AlertNotification from "./AlertNotification";
 
 const CourseCard = ({ course }) => {
-  const [openAlert, setOpenAlert] = React.useState(false);
   const isLogin = false; // Change based on actual login state
 
   const handleAddToCart = () => {
     if (!isLogin) {
-      setOpenAlert(true);
+      console.log("Please login to add to cart");
     } else {
       // Add to cart logic here
     }
-  };
-
-  const handleCloseAlert = () => {
-    setOpenAlert(false);
   };
 
   return (
@@ -142,12 +136,6 @@ const CourseCard = ({ course }) => {
           </Box>
         </Box>
       </Card>
-
-      <AlertNotification
-        open={openAlert}
-        handleClose={handleCloseAlert}
-        message="Please login to add to cart"
-      />
     </>
   );
 };

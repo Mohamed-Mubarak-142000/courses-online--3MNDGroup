@@ -1,40 +1,82 @@
-// FormAuth.js
 import { Grid, Button, Typography } from "@mui/material";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import TextInput from "./TextInput";
 import PasswordInput from "./PasswordInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useFetching from "./../hooks/useFetching";
+import AlertSnackbar from "./AlertSnackbar";
+import { ApiContext } from "./../store/ApiContext";
 
 const FormAuth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [emailData, setEmailData] = useState("");
   const [passwordData, setPasswordData] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const navigate = useNavigate();
+  const { userLogin, user } = useContext(ApiContext);
+  const { loading, data, refetch } = useFetching({
+    title: "Login",
+    endPoint: "users",
+  });
 
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+      console.log(user);
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch, data?.data]);
+  console.log(data?.data);
+  // Handler for show password
   const handleClickShowPassword = useCallback(() => {
     setShowPassword((prevShow) => !prevShow);
   }, []);
 
+  // Handlers for input fields
   const handleMouseDownPassword = useCallback((event) => {
     event.preventDefault();
   }, []);
 
+  // Form submit handler
   const handleSubmit = useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault();
-      console.log(emailData, passwordData);
+      try {
+        const user = data?.data?.find(
+          (user) => user.email === emailData && user.password === passwordData
+        );
+        if (user) {
+          userLogin(user);
+          navigate("/");
+          setSnackbarMessage("Login successful!");
+          setSnackbarSeverity("success");
+        } else {
+          setSnackbarMessage("Login failed. Please check your credentials.");
+          setSnackbarSeverity("error");
+        }
+        setOpenSnackbar(true);
+      } catch (error) {
+        console.error("Error during login:", error);
+        setSnackbarMessage("An error occurred. Please try again.");
+        setSnackbarSeverity("error");
+        setOpenSnackbar(true);
+      }
     },
-    [emailData, passwordData]
+    [emailData, passwordData, data, navigate, userLogin]
   );
 
-  const handleChangeEmail = useCallback((event) => {
-    setEmailData(event.target.value);
-    console.log(event.target.value);
-  }, []);
-
-  const handleChangePassword = useCallback((event) => {
-    setPasswordData(event.target.value);
-    console.log(event.target.value);
-  }, []);
+  // Handlers for input fields
+  const handleChange = useCallback(
+    (setter) => (event) => {
+      setter(event.target.value);
+    },
+    []
+  );
 
   return (
     <Grid
@@ -62,15 +104,16 @@ const FormAuth = () => {
           label="Email"
           type="email"
           value={emailData}
-          onChange={handleChangeEmail}
+          onChange={handleChange(setEmailData)}
         />
         <PasswordInput
           value={passwordData}
           showPassword={showPassword}
           onClickShowPassword={handleClickShowPassword}
           onMouseDownPassword={handleMouseDownPassword}
-          onChange={handleChangePassword}
+          onChange={handleChange(setPasswordData)}
         />
+
         <Button
           fullWidth
           variant="contained"
@@ -86,16 +129,15 @@ const FormAuth = () => {
               backgroundColor: "#e2ba53",
             },
           }}
+          disabled={loading}
         >
-          Login
+          {loading ? "Loading..." : "Login"}
         </Button>
 
         <Typography
           variant="body1"
-          gutterBottom
           sx={{
             color: "#fff",
-            width: "100%",
             textAlign: "center",
             padding: "0.5rem",
             marginTop: "1rem",
@@ -107,6 +149,13 @@ const FormAuth = () => {
           </Link>
         </Typography>
       </form>
+
+      <AlertSnackbar
+        open={openSnackbar}
+        onClose={() => setOpenSnackbar(false)}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+      />
     </Grid>
   );
 };
