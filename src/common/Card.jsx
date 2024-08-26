@@ -33,7 +33,7 @@ const CourseCard = ({ course }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          height: 450,
+          minHeight: 450,
           boxShadow: 3,
           borderRadius: 2,
         }}
