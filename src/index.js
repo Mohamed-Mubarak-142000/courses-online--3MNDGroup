@@ -17,6 +17,10 @@ import ApiContextProvider from "./store/ApiContext";
 import Blogs from "./pages/Blogs";
 import Frq from "./pages/Frq";
 import Inroll from "./pages/Inroll";
+import WishList from "./pages/WishList";
+import Cart from "./pages/Cart";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +33,10 @@ const router = createBrowserRouter([
       { path: "/courses", element: <Courses /> },
       { path: "/blog", element: <Blogs /> },
       { path: "/frq", element: <Frq /> },
+      { path: "/wishList", element: <WishList /> },
+      { path: "/cart", element: <Cart /> },
+      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/profile", element: <Profile /> },
       {
         path: "/courses/:courseId",
         element: <DetialsCourse />,

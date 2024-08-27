@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   Card,
   CardMedia,
@@ -6,29 +6,68 @@ import {
   Typography,
   Box,
   Button,
+  IconButton,
 } from "@mui/material";
-import PeopleIcon from "@mui/icons-material/People";
-import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
+import {
+  People as PeopleIcon,
+  VideoLibrary as VideoLibraryIcon,
+  ShoppingCartOutlined,
+  FavoriteBorderOutlined as FavoriteBorderOutlinedIcon,
+  Favorite,
+} from "@mui/icons-material";
+import { ApiContext } from "../store/ApiContext";
+import AlertSnackbar from "./AlertSnackbar";
 import { Link } from "react-router-dom";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
 const CourseCard = ({ course }) => {
-  const isLogin = false; // Change based on actual login state
+  const { user, addToWishlist, wishlist, addToCart } = useContext(ApiContext);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   const handleAddToCart = () => {
-    if (!isLogin) {
-      console.log("Please login to add to cart");
-    } else {
-      // Add to cart logic here
+    if (!user) {
+      setSnackbarMessage("Please login to add to cart");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
+      return;
     }
+    addToCart(course); // Use the addToCart function from ApiContext
+    setSnackbarMessage("Added to cart successfully!");
+    setSnackbarSeverity("success");
+    setSnackbarOpen(true);
+  };
+
+  const isInWishlist = wishlist.some((item) => item.id === course.id);
+
+  const handleAddToWishlist = () => {
+    if (!user) {
+      setSnackbarMessage("Please login to add to wishlist");
+      setSnackbarSeverity("warning");
+      setSnackbarOpen(true);
+      return;
+    }
+    if (isInWishlist) {
+      addToWishlist(course);
+      setSnackbarMessage("Removed from wishlist!");
+      setSnackbarSeverity("warning");
+    } else {
+      addToWishlist(course);
+      setSnackbarMessage("Added to wishlist!");
+      setSnackbarSeverity("success");
+    }
+    setSnackbarOpen(true);
   };
 
   return (
     <>
       <Card
         sx={{
-          maxWidth: "400px",
+          maxWidth: 400,
           mt: 2,
           display: "flex",
           flexDirection: "column",
@@ -38,104 +77,106 @@ const CourseCard = ({ course }) => {
           borderRadius: 2,
         }}
       >
-        <CardMedia
-          component="img"
-          alt={course.title}
-          image={course.image}
-          title={course.title}
-          loading="lazy"
-          sx={{
-            height: 180,
-            objectFit: "cover",
-          }}
-        />
-        <Link
-          to={`/courses/${course.id}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <CardContent
+        <Link to={`/courses/${course.id}`}>
+          <CardMedia
+            component="img"
+            alt={course.title}
+            image={course.image}
+            loading="lazy"
+            sx={{ height: 200, objectFit: "cover" }}
+          />
+        </Link>
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Box
             sx={{
-              flexGrow: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 1,
             }}
           >
-            <Typography gutterBottom variant="h5" component="div">
-              {course.title}
-            </Typography>
+            <Link
+              to={`/courses/${course.id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Typography variant="h6" component="div" noWrap>
+                {course.title}
+              </Typography>
+            </Link>
+            <IconButton
+              aria-label="add to wishlist"
+              onClick={handleAddToWishlist}
+              sx={{
+                color: "secondary.main",
+                "&:hover": { color: "secondary.dark" },
+              }}
+            >
+              {isInWishlist ? (
+                <Favorite sx={{ fontSize: 25 }} />
+              ) : (
+                <FavoriteBorderOutlinedIcon sx={{ fontSize: 25 }} />
+              )}
+            </IconButton>
+          </Box>
 
-            <Typography variant="body2" color="text.secondary" paragraph>
-              {course.description}
-            </Typography>
+          <Typography variant="body2" color="text.secondary" paragraph noWrap>
+            {course.description}
+          </Typography>
+          <Typography variant="body2" gutterBottom>
+            {course.date}
+          </Typography>
+        </CardContent>
 
-            <Typography gutterBottom variant="body2" component="div">
-              {course.date}
-            </Typography>
-          </CardContent>
+        <Link to={`/courses/${course.id}`}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{ p: 2 }}
+          >
+            <Box display="flex" alignItems="center">
+              <VideoLibraryIcon sx={{ mr: 1 }} />
+              <Typography variant="body2">{course.hours} Hours</Typography>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <PeopleIcon sx={{ mr: 1 }} />
+              <Typography variant="body2">
+                {course.numberOfStudents} Students
+              </Typography>
+            </Box>
+          </Box>
         </Link>
 
-        {/* Buttons: Add to Cart and Wishlist */}
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ p: 1 }}
+        <Button
+          variant="contained"
+          color="warning"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            fontWeight: "bold",
+            fontSize: 14,
+            width: "90%",
+            mx: "auto",
+            mb: 2,
+            padding: "10px",
+            borderTop: "1px solid",
+            borderColor: "warning.light",
+            borderRadius: "5px",
+          }}
+          onClick={handleAddToCart}
         >
-          <Button
-            variant="outlined"
-            color="primary"
-            size="small"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              fontWeight: "bold",
-              fontSize: "14px",
-              border: "1px solid #1976d2", // Match with primary color
-            }}
-            onClick={handleAddToCart}
-          >
-            <ShoppingBagIcon />
-            Add to Cart
-          </Button>
-
-          <Button
-            variant="outlined"
-            color="secondary"
-            size="small"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              borderRadius: "50%",
-              minWidth: "40px",
-              height: "40px",
-              border: "1px solid #f50057", // Match with secondary color
-            }}
-          >
-            <FavoriteBorderOutlinedIcon
-              sx={{ color: "#f50057", fontSize: "25px" }} // Match with secondary color
-            />
-          </Button>
-        </Box>
-
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ p: 2 }}
-        >
-          <Box display="flex" alignItems="center">
-            <VideoLibraryIcon sx={{ mr: 1 }} />
-            <Typography variant="body2">{course.hours} Hours</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <PeopleIcon sx={{ mr: 1 }} />
-            <Typography variant="body2">
-              {course.numberOfStudents} Students
-            </Typography>
-          </Box>
-        </Box>
+          <ShoppingCartOutlined />
+          Add to Cart
+        </Button>
       </Card>
+
+      <AlertSnackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        onClose={handleSnackbarClose}
+        severity={snackbarSeverity}
+      />
     </>
   );
 };

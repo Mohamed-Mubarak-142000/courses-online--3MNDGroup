@@ -4,12 +4,19 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ApiContext } from "../store/ApiContext";
 import { Avatar, Menu, MenuItem } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
+import {
+  Logout,
+  Person2Rounded,
+  FavoriteOutlined,
+  Dashboard,
+  ShoppingCartOutlined,
+} from "@mui/icons-material";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const { user, userLogout } = useContext(ApiContext);
+  const { user, userLogout, wishlist, cart } = useContext(ApiContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,12 +43,7 @@ export default function Header() {
     handleMenuClose();
   };
 
-  const handleDashboard = () => {
-    navigate("/dashboard");
-    handleMenuClose();
-  };
-
-  const Links = [
+  const navLinks = [
     { path: "/", title: "Home" },
     { path: "/about", title: "About" },
     { path: "/courses", title: "Courses" },
@@ -52,7 +54,7 @@ export default function Header() {
   return (
     <header className={`header ${isScrolled ? "move" : ""}`}>
       <h2
-        className="first-letter:text-7xl align-text-top font-bold text-primary cursor-pointer select-none"
+        className="first-letter:text-7xl font-bold text-primary cursor-pointer select-none"
         onClick={() => navigate("/")}
       >
         C
@@ -74,18 +76,18 @@ export default function Header() {
 
       <nav
         className={`flex justify-center items-center gap-5 text-capitalize md:flex-row flex-col md:static transition-all duration-500 fixed 
-        inset-0 top-20 ${
-          isMenuOpen ? "h-80" : "h-0"
-        } md:h-auto overflow-hidden bg-primary md:bg-transparent shadow-2xl md:shadow-none`}
+          inset-0 top-20 ${
+            isMenuOpen ? "h-80" : "h-0"
+          } md:h-auto overflow-hidden bg-primary md:bg-transparent shadow-2xl md:shadow-none`}
       >
-        {Links.map((link) => (
+        {navLinks.map(({ path, title }) => (
           <NavLink
-            key={link.path}
-            to={link.path}
+            key={path}
+            to={path}
             onClick={() => setIsMenuOpen(false)}
             className="text-base text-text_dark md:text-white px-5 py-px"
           >
-            {link.title}
+            {title}
           </NavLink>
         ))}
 
@@ -106,12 +108,61 @@ export default function Header() {
                   width: "200px",
                   marginTop: "10px",
                   borderRadius: "10px",
-                  backgroundColor: "white",
                 },
               }}
             >
-              <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate("/profile");
+                  handleMenuClose();
+                }}
+              >
+                <Person2Rounded sx={{ mr: 1 }} />
+                {user?.username || user?.email}
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  navigate("/dashboard");
+                  handleMenuClose();
+                }}
+              >
+                <Dashboard sx={{ mr: 1 }} />
+                Dashboard
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  navigate("/cart");
+                  handleMenuClose();
+                }}
+                sx={{ position: "relative" }}
+              >
+                <ShoppingCartOutlined sx={{ mr: 1 }} />
+                Cart
+                <div className="absolute top-[-7px] left-8 w-6 h-6 bg-secondary text-bg_block text-center rounded-full">
+                  {cart.length}
+                </div>
+              </MenuItem>
+
+              <MenuItem
+                onClick={() => {
+                  navigate("/wishlist");
+                  handleMenuClose();
+                }}
+                sx={{ position: "relative" }}
+              >
+                <FavoriteOutlined sx={{ mr: 1 }} />
+                Wish List
+                <div className="absolute top-[-7px] left-8 w-6 h-6 bg-secondary text-bg_block text-center rounded-full">
+                  {wishlist.length}
+                </div>
+              </MenuItem>
+
+              <MenuItem onClick={handleLogout}>
+                <Logout sx={{ mr: 1 }} />
+                Logout
+              </MenuItem>
             </Menu>
           </div>
         ) : (
