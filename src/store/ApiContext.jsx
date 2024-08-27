@@ -3,7 +3,8 @@ import React, { createContext, useEffect, useState } from "react";
 export const ApiContext = createContext();
 
 export default function ApiContextProvider({ children }) {
-  const [baseUrl] = useState("http://localhost:4000/");
+  // const [baseUrl] = useState("http://localhost:4000/");
+  const [baseUrl] = useState("https://json-server-db-gamma.vercel.app/");
   const [user, setUser] = useState(null);
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
