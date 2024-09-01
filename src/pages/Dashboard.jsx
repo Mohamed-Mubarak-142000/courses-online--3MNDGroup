@@ -1,11 +1,20 @@
 import { List } from "@mui/icons-material";
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import SlideBar from "../admin/SlideBar";
+import { ApiContext } from "./../store/ApiContext";
 
 const Dashboard = () => {
+  const { user } = useContext(ApiContext);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.role === "user") {
+      navigate("/home");
+    }
+  }, [user.role, navigate]);
 
   return (
     <section className="w-full  lg:w-[80%] mx-auto my-36 flex items-center lg:items-start justify-between">
