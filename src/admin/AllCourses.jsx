@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useFetching from "./../hooks/useFetching";
-import CardSkeleton from "./../common/CardSkeleton";
 import Error from "./../common/Error";
+import CardSkeleton from "./../common/CardSkeleton";
+import { Helmet } from "react-helmet-async";
 import { Grid, TextField } from "@mui/material";
 import Card from "../common/Card";
-import { Helmet } from "react-helmet-async";
-
-const Courses = () => {
-  const [search, setSearch] = React.useState("");
-  const { data, isLoading, error } = useFetching({
-    title: "Course Recommendations For you",
+const AllCourses = () => {
+  const [search, setSearch] = useState("");
+  const { data, isLoading, isError } = useFetching({
+    title: "get all courses",
     endPoint: "courses",
   });
 
@@ -21,7 +20,7 @@ const Courses = () => {
     return <CardSkeleton />;
   }
 
-  if (error) {
+  if (isError) {
     return <Error />;
   }
 
@@ -38,7 +37,7 @@ const Courses = () => {
       <Helmet>
         <title>All Courses</title>
       </Helmet>
-      <section className="my-28">
+      <section className="">
         <div className="flex justify-center items-center">
           <TextField
             id="outlined-basic"
@@ -73,7 +72,7 @@ const Courses = () => {
         </div>
 
         {filteredCourses?.length ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 px-4 lg:px-10 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredCourses?.map((course) => (
               <Grid key={course.id} item xs={12} sm={6} md={4} lg={3}>
                 <Card course={course} />
@@ -92,4 +91,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default AllCourses;

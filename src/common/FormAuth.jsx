@@ -52,7 +52,11 @@ const FormAuth = () => {
         );
         if (user) {
           userLogin(user);
-          navigate("/");
+          if (user.role === "user") {
+            navigate("/");
+          } else {
+            navigate("/dashboard");
+          }
           setSnackbarMessage("Login successful!");
           setSnackbarSeverity("success");
         } else {

@@ -14,6 +14,7 @@ import {
   ShoppingCartOutlined,
   FavoriteBorderOutlined as FavoriteBorderOutlinedIcon,
   Favorite,
+  Edit,
 } from "@mui/icons-material";
 import { ApiContext } from "../store/ApiContext";
 import AlertSnackbar from "./AlertSnackbar";
@@ -43,6 +44,7 @@ const CourseCard = ({ course }) => {
   };
 
   const isInWishlist = wishlist.some((item) => item.id === course.id);
+  const isCarted = user?.products?.some((item) => item.id === course.id);
 
   const handleAddToWishlist = () => {
     if (!user) {
@@ -103,20 +105,22 @@ const CourseCard = ({ course }) => {
                 {course.title}
               </Typography>
             </Link>
-            <IconButton
-              aria-label="add to wishlist"
-              onClick={handleAddToWishlist}
-              sx={{
-                color: "secondary.main",
-                "&:hover": { color: "secondary.dark" },
-              }}
-            >
-              {isInWishlist ? (
-                <Favorite sx={{ fontSize: 25 }} />
-              ) : (
-                <FavoriteBorderOutlinedIcon sx={{ fontSize: 25 }} />
-              )}
-            </IconButton>
+            {user.role === "user" && (
+              <IconButton
+                aria-label="add to wishlist"
+                onClick={handleAddToWishlist}
+                sx={{
+                  color: "secondary.main",
+                  "&:hover": { color: "secondary.dark" },
+                }}
+              >
+                {isInWishlist ? (
+                  <Favorite sx={{ fontSize: 25 }} />
+                ) : (
+                  <FavoriteBorderOutlinedIcon sx={{ fontSize: 25 }} />
+                )}
+              </IconButton>
+            )}
           </Box>
 
           <Typography variant="body2" color="text.secondary" paragraph noWrap>
@@ -147,28 +151,60 @@ const CourseCard = ({ course }) => {
           </Box>
         </Link>
 
-        <Button
-          variant="contained"
-          color="warning"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            fontWeight: "bold",
-            fontSize: 14,
-            width: "90%",
-            mx: "auto",
-            mb: 2,
-            padding: "10px",
-            borderTop: "1px solid",
-            borderColor: "warning.light",
-            borderRadius: "5px",
-          }}
-          onClick={handleAddToCart}
-        >
-          <ShoppingCartOutlined />
-          Add to Cart
-        </Button>
+        {user.role === "user" ? (
+          isCarted ? (
+            <Link
+              to={`/inroll/${course.id}`}
+              className="bg-primary text-text_dark font-semibold p-[10px] rounded mb-4 w-[90%] mx-auto text-center"
+            >
+              Enroll Now
+            </Link>
+          ) : (
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                fontWeight: "bold",
+                fontSize: 14,
+                width: "90%",
+                mx: "auto",
+                mb: 2,
+                padding: "10px",
+                borderTop: "1px solid",
+                borderColor: "warning.light",
+                borderRadius: "5px",
+              }}
+              onClick={handleAddToCart}
+            >
+              <ShoppingCartOutlined />
+              Add to Cart
+            </Button>
+          )
+        ) : (
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              fontWeight: "bold",
+              fontSize: 14,
+              width: "90%",
+              mx: "auto",
+              mb: 2,
+              padding: "10px",
+              borderTop: "1px solid",
+              borderRadius: "5px",
+            }}
+          >
+            <Edit />
+            Edit Course
+          </Button>
+        )}
       </Card>
 
       <AlertSnackbar

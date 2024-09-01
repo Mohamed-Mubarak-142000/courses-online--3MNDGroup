@@ -21,6 +21,10 @@ import WishList from "./pages/WishList";
 import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
+import HomeAdmin from "./admin/HomeAdmin";
+import AllUsers from "./admin/AllUsers";
+import AllCourses from "./admin/AllCourses";
+import CreateCourse from "./admin/CreateCourse";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +39,17 @@ const router = createBrowserRouter([
       { path: "/frq", element: <Frq /> },
       { path: "/wishList", element: <WishList /> },
       { path: "/cart", element: <Cart /> },
-      { path: "/dashboard", element: <Dashboard /> },
+      {
+        path: "/dashboard/",
+        element: <Dashboard />,
+        children: [
+          { index: true, element: <HomeAdmin /> },
+          { path: "home-admin", element: <HomeAdmin /> },
+          { path: "all-users", element: <AllUsers /> },
+          { path: "all-courses", element: <AllCourses /> },
+          { path: "create-course", element: <CreateCourse /> },
+        ],
+      },
       { path: "/profile", element: <Profile /> },
       {
         path: "/courses/:courseId",

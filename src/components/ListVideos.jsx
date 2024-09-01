@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import useFetching from "./../hooks/useFetching";
 import { CircularProgress } from "@mui/material";
 import Error from "./../common/Error";
 import ReactPlayer from "react-player";
+import { ApiContext } from "../store/ApiContext";
 
 const ListVideos = ({ courseId, handleSelectedUrlVideo }) => {
+  const { user } = useContext(ApiContext);
   const { data, error, isLoading } = useFetching({
     title: "List Videos",
     endPoint: `courses/${courseId}`,
   });
 
-  const isLogin = false; // Change this value based on actual login state
+  const isCarted = user?.products?.some((item) => item.id === courseId);
 
   if (isLoading) {
     return (
@@ -30,12 +32,12 @@ const ListVideos = ({ courseId, handleSelectedUrlVideo }) => {
         <div
           key={video.url}
           onClick={() => {
-            if (isLogin || index === 0) {
+            if (isCarted || index === 0) {
               handleSelectedUrlVideo(video.url);
             }
           }}
           className={
-            isLogin || index === 0
+            isCarted || index === 0
               ? "cursor-pointer"
               : "cursor-not-allowed opacity-50"
           }
@@ -48,7 +50,7 @@ const ListVideos = ({ courseId, handleSelectedUrlVideo }) => {
             config={{
               file: {
                 attributes: {
-                  controlsList: !isLogin && index !== 0 ? "nodownload" : "",
+                  controlsList: !isCarted && index !== 0 ? "nodownload" : "",
                 },
               },
             }}

@@ -48,3 +48,7 @@ body {
   background-color: #fcd980;
   border-radius: 0px 5px 0 0;
 }
+
+.active {
+  font-weight: bold;
+}

@@ -121,15 +121,17 @@ export default function Header() {
                 {user?.username || user?.email}
               </MenuItem>
 
-              <MenuItem
-                onClick={() => {
-                  navigate("/dashboard");
-                  handleMenuClose();
-                }}
-              >
-                <Dashboard sx={{ mr: 1 }} />
-                Dashboard
-              </MenuItem>
+              {user.role === "admin" && (
+                <MenuItem
+                  onClick={() => {
+                    navigate("/dashboard");
+                    handleMenuClose();
+                  }}
+                >
+                  <Dashboard sx={{ mr: 1 }} />
+                  Dashboard
+                </MenuItem>
+              )}
 
               <MenuItem
                 onClick={() => {

@@ -580,17 +580,13 @@
       "id": "a7561",
       "email": "admin@gmail.com",
       "password": "123456",
-      "role": "admin",
-      "wishList": [],
-      "cart": []
+      "role": "admin"
     },
     {
       "id": "a7562",
       "email": "user2@gmail.com",
       "password": "123456",
-      "role": "user",
-      "wishList": [],
-      "cart": []
+      "role": "user"
     },
     {
       "id": "e17a",
