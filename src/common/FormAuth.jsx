@@ -24,7 +24,6 @@ const FormAuth = () => {
   useEffect(() => {
     if (user) {
       navigate("/");
-      console.log(user);
     }
   }, [user, navigate]);
 
