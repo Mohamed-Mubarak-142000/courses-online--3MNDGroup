@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loading from "../common/Loading";
 import Hero from "../components/Hero";
 import Statistic from "../components/Statistic";

@@ -105,7 +105,7 @@ const CourseCard = ({ course }) => {
                 {course.title}
               </Typography>
             </Link>
-            {user.role !== "admin" && (
+            {user?.role !== "admin" && (
               <IconButton
                 aria-label="add to wishlist"
                 onClick={handleAddToWishlist}
@@ -151,7 +151,7 @@ const CourseCard = ({ course }) => {
           </Box>
         </Link>
 
-        {user.role !== "admin" ? (
+        {user?.role !== "admin" ? (
           isCarted ? (
             <Link
               to={`/inroll/${course.id}`}
