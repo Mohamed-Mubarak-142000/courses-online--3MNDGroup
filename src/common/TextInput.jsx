@@ -1,7 +1,14 @@
 import { TextField } from "@mui/material";
 import React from "react";
 
-const TextInput = ({ label, type, value, onChange, reading = false }) => {
+const TextInput = ({
+  label,
+  type,
+  value,
+  onChange,
+  textColor = "#fff",
+  reading = false,
+}) => {
   return (
     <TextField
       value={value}
@@ -31,7 +38,7 @@ const TextInput = ({ label, type, value, onChange, reading = false }) => {
           color: "#FCD980",
         },
         "& .MuiInputBase-input": {
-          color: "#fff", // Text color
+          color: textColor, // Text color
         },
       }}
       inputProps={{ readOnly: reading }}

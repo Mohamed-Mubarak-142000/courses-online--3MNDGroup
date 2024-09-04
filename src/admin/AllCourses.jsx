@@ -35,9 +35,9 @@ const AllCourses = () => {
   return (
     <>
       <Helmet>
-        <title>All Courses</title>
+        <title>Dashboard - All Courses</title>
       </Helmet>
-      <section className="">
+      <section>
         <div className="flex justify-center items-center">
           <TextField
             id="outlined-basic"

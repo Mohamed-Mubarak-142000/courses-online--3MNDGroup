@@ -15,6 +15,7 @@ import {
   FavoriteBorderOutlined as FavoriteBorderOutlinedIcon,
   Favorite,
   Edit,
+  Delete,
 } from "@mui/icons-material";
 import { ApiContext } from "../store/ApiContext";
 import AlertSnackbar from "./AlertSnackbar";
@@ -37,7 +38,7 @@ const CourseCard = ({ course }) => {
       setSnackbarOpen(true);
       return;
     }
-    addToCart(course); // Use the addToCart function from ApiContext
+    addToCart(course);
     setSnackbarMessage("Added to cart successfully!");
     setSnackbarSeverity("success");
     setSnackbarOpen(true);
@@ -53,16 +54,22 @@ const CourseCard = ({ course }) => {
       setSnackbarOpen(true);
       return;
     }
-    if (isInWishlist) {
-      addToWishlist(course);
-      setSnackbarMessage("Removed from wishlist!");
-      setSnackbarSeverity("warning");
-    } else {
-      addToWishlist(course);
-      setSnackbarMessage("Added to wishlist!");
-      setSnackbarSeverity("success");
-    }
+    addToWishlist(course);
+    setSnackbarMessage(
+      isInWishlist ? "Removed from wishlist!" : "Added to wishlist!"
+    );
+    setSnackbarSeverity(isInWishlist ? "warning" : "success");
     setSnackbarOpen(true);
+  };
+
+  const handleEditCourse = () => {
+    // Implement edit logic here
+    console.log("Edit course", course.id);
+  };
+
+  const handleDeleteCourse = () => {
+    // Implement delete logic here
+    console.log("Delete course", course.id);
   };
 
   return (
@@ -74,7 +81,7 @@ const CourseCard = ({ course }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          minHeight: 450,
+          minHeight: 500,
           boxShadow: 3,
           borderRadius: 2,
         }}
@@ -122,7 +129,6 @@ const CourseCard = ({ course }) => {
               </IconButton>
             )}
           </Box>
-
           <Typography variant="body2" color="text.secondary" paragraph noWrap>
             {course.description}
           </Typography>
@@ -130,7 +136,6 @@ const CourseCard = ({ course }) => {
             {course.date}
           </Typography>
         </CardContent>
-
         <Link to={`/courses/${course.id}`}>
           <Box
             display="flex"
@@ -150,7 +155,6 @@ const CourseCard = ({ course }) => {
             </Box>
           </Box>
         </Link>
-
         {user?.role !== "admin" ? (
           isCarted ? (
             <Link
@@ -184,29 +188,52 @@ const CourseCard = ({ course }) => {
             </Button>
           )
         ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              fontWeight: "bold",
-              fontSize: 14,
-              width: "90%",
-              mx: "auto",
-              mb: 2,
-              padding: "10px",
-              borderTop: "1px solid",
-              borderRadius: "5px",
-            }}
-          >
-            <Edit />
-            Edit Course
-          </Button>
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                fontWeight: "bold",
+                fontSize: 14,
+                width: "90%",
+                mx: "auto",
+                mb: 1,
+                padding: "10px",
+                borderTop: "1px solid",
+                borderRadius: "5px",
+              }}
+              onClick={handleEditCourse}
+            >
+              Edit Course
+              <Edit />
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                mb: 1,
+                gap: 1,
+                fontWeight: "bold",
+                fontSize: 14,
+                width: "90%",
+                mx: "auto",
+                padding: "10px",
+                borderTop: "1px solid",
+                borderRadius: "5px",
+              }}
+              onClick={handleDeleteCourse}
+            >
+              Delete Course
+              <Delete />
+            </Button>
+          </>
         )}
       </Card>
-
       <AlertSnackbar
         open={snackbarOpen}
         message={snackbarMessage}

@@ -11,10 +11,14 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user.role === "user") {
-      navigate("/home");
+    if (user?.role !== "admin") {
+      navigate("/");
     }
-  }, [user.role, navigate]);
+  }, [user?.role, navigate]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <section className="w-full  lg:w-[80%] mx-auto my-36 flex items-center lg:items-start justify-between">
