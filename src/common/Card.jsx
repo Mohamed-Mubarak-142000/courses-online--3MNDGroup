@@ -20,12 +20,19 @@ import {
 import { ApiContext } from "../store/ApiContext";
 import AlertSnackbar from "./AlertSnackbar";
 import { Link } from "react-router-dom";
+import useDeleteCourse from "../hooks/useDeleteCourse";
+import CustomModal from "../components/CustomModal"; // Import your Modal
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, refetch }) => {
   const { user, addToWishlist, wishlist, addToCart } = useContext(ApiContext);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
+  const [modalAction, setModalAction] = useState(() => {});
+  const { mutate: deleteCourse } = useDeleteCourse();
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -62,14 +69,20 @@ const CourseCard = ({ course }) => {
     setSnackbarOpen(true);
   };
 
-  const handleEditCourse = () => {
-    // Implement edit logic here
-    console.log("Edit course", course.id);
+  const handleDeleteCourse = () => {
+    if (window.confirm("Are you sure you want to delete this course?")) {
+      deleteCourse(course.id);
+      refetch();
+    }
   };
 
-  const handleDeleteCourse = () => {
-    // Implement delete logic here
-    console.log("Delete course", course.id);
+  const handleEditCourse = () => {
+    setModalOpen(true);
+    setModalTitle("Edit Course");
+    setModalContent("Edit course functionality is under construction.");
+    setModalAction(() => () => {
+      setModalOpen(false);
+    });
   };
 
   return (
@@ -109,7 +122,7 @@ const CourseCard = ({ course }) => {
               style={{ textDecoration: "none" }}
             >
               <Typography variant="h6" component="div" noWrap>
-                {course.title}
+                {course.title.slice(0, 25)}
               </Typography>
             </Link>
             {user?.role !== "admin" && (
@@ -234,6 +247,18 @@ const CourseCard = ({ course }) => {
           </>
         )}
       </Card>
+
+      {/* Modal */}
+      <CustomModal
+        open={modalOpen}
+        handleClose={() => setModalOpen(false)}
+        title={modalTitle}
+        content={modalContent}
+        onConfirm={modalAction}
+        course={course}
+      />
+
+      {/* Snackbar */}
       <AlertSnackbar
         open={snackbarOpen}
         message={snackbarMessage}

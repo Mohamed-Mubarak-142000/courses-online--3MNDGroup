@@ -8,6 +8,8 @@ import FourRowForm from "./FourRowForm";
 import FiveRowForm from "./FiveRowForm";
 import InstructorRow from "./InstructorRow";
 import SubVideo from "./SubVideo";
+import Error from "../common/Error";
+import Loading from "./../common/Loading";
 
 const formatDate = (date) => new Date(date).toISOString().split("T")[0];
 
@@ -35,10 +37,11 @@ const CreateCourse = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const [videoDuration, setVideoDuration] = useState("");
 
-  const { mutate } = useCustomMutation({
+  const { mutate, isError, isLoading } = useCustomMutation({
     title: "create course",
     endPoint: "courses",
   });
+
   const navigate = useNavigate();
 
   const handleAddVideo = () => {
@@ -55,6 +58,11 @@ const CreateCourse = () => {
     setVideoTitle("");
     setVideoUrl("");
     setVideoDuration("");
+  };
+
+  const handleDeleteVideo = (index) => {
+    const updatedVideos = videos.filter((_, item) => item !== index);
+    setVideos(updatedVideos);
   };
 
   const handleCreateCourse = (e) => {
@@ -99,6 +107,14 @@ const CreateCourse = () => {
       },
     });
   };
+
+  if (isError) {
+    return <Error />;
+  }
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <section className="p-5 rounded-lg">
@@ -150,13 +166,13 @@ const CreateCourse = () => {
           topics={topics}
           setTopics={setTopics}
         />
-        {/***** Videos **** */}
-
+        {/* Videos */}
         <SubVideo
           setVideoTitle={setVideoTitle}
           setVideoUrl={setVideoUrl}
           setVideoDuration={setVideoDuration}
           handleAddVideo={handleAddVideo}
+          handleDeleteVideo={handleDeleteVideo}
           videoTitle={videoTitle}
           videoUrl={videoUrl}
           videoDuration={videoDuration}

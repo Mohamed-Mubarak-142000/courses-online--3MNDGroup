@@ -4,7 +4,7 @@ import TextInput from "../common/TextInput";
 const FiveRowForm = ({ description, setDescription, image, setImage }) => {
   return (
     <div className="flex items-center gap-5 flex-wrap w-full justify-between">
-      <div className="w-[48%]">
+      <div className="w-full lg:w-[48%]">
         <TextInput
           label="Description"
           onChange={(e) => setDescription(e.target.value)}
@@ -14,7 +14,7 @@ const FiveRowForm = ({ description, setDescription, image, setImage }) => {
           required
         />
       </div>
-      <div className="w-[48%]">
+      <div className="w-full lg:w-[48%]">
         <TextInput
           label="Image URL"
           onChange={(e) => setImage(e.target.value)}

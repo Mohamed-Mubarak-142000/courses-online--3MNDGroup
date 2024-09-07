@@ -6,7 +6,7 @@ import { dataLevels } from "../utils/data";
 const ThirdRowForm = ({ level, setLevel, category, setCategory }) => {
   return (
     <div className="flex items-center gap-5 flex-wrap w-full justify-between">
-      <div className="w-[48%]">
+      <div className="w-full lg:w-[48%]">
         <SelectInput
           label="Level"
           onChange={(e) => setLevel(e.target.value)}
@@ -16,7 +16,7 @@ const ThirdRowForm = ({ level, setLevel, category, setCategory }) => {
           required
         />
       </div>
-      <div className="w-[48%]">
+      <div className="w-full w-[48%]">
         <TextInput
           label="Category"
           onChange={(e) => setCategory(e.target.value)}

@@ -8,7 +8,7 @@ import Card from "../common/Card";
 import { Link } from "react-router-dom";
 const Recommendations = () => {
   const [category, setCategory] = useState("Category");
-  const { data, isLoading, error } = useFetching({
+  const { data, isLoading, error, refetch } = useFetching({
     title: "Course Recommendations For you",
     endPoint: "courses",
   });
@@ -65,7 +65,7 @@ const Recommendations = () => {
         {data?.data
           .filter((item) => item.category === category)
           .map((item) => (
-            <Card course={item} />
+            <Card course={item} refetch={refetch} />
           ))}
       </div>
     </section>

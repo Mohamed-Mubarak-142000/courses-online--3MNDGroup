@@ -12,7 +12,7 @@ const InstructorRow = ({
   return (
     <>
       <div className="flex items-center gap-5 flex-wrap w-full justify-between">
-        <div className="w-[48%]">
+        <div className="w-full lg:w-[48%]">
           <TextInput
             label="Instructor Name"
             onChange={(e) =>
@@ -23,7 +23,7 @@ const InstructorRow = ({
             value={instructor.name}
           />
         </div>
-        <div className="w-[48%]">
+        <div className="w-full lg:w-[48%]">
           <TextInput
             label="Instructor Email"
             onChange={(e) =>
@@ -37,7 +37,7 @@ const InstructorRow = ({
       </div>
 
       <div className="flex items-center gap-5 flex-wrap w-full justify-between">
-        <div className="w-[48%]">
+        <div className="w-full lg:w-[48%]">
           <TextInput
             label="Instructor Bio"
             onChange={(e) =>
@@ -48,7 +48,7 @@ const InstructorRow = ({
             value={instructor.bio}
           />
         </div>
-        <div className="w-[48%]">
+        <div className="w-full lg:w-[48%]">
           <TextInput
             label="Number of Students"
             onChange={(e) => setNumberOfStudents(e.target.value)}
@@ -60,7 +60,7 @@ const InstructorRow = ({
       </div>
       {/* Topics and Videos */}
       <div className="flex items-center gap-5 flex-wrap w-full justify-between">
-        <div className="w-[48%]">
+        <div className="w-full lg:selection:w-[48%]">
           <TextInput
             label="Topics (comma separated)"
             onChange={(e) => setTopics(e.target.value.split(","))}

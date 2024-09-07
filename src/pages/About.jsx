@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Typography, Button, Avatar } from "@mui/material";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Helmet>

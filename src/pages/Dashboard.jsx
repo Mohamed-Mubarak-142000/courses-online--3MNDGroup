@@ -21,7 +21,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <section className="w-full  lg:w-[80%] mx-auto my-36 flex items-center lg:items-start justify-between">
+    <section className="w-full lg:w-[80%] mx-auto lg:my-36 flex items-center lg:items-start justify-between">
       {/* Sidebar Toggle Button */}
       <List
         onClick={handleOpen}

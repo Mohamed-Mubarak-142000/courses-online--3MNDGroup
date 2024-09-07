@@ -7,7 +7,7 @@ import { Grid, TextField } from "@mui/material";
 import Card from "../common/Card";
 const AllCourses = () => {
   const [search, setSearch] = useState("");
-  const { data, isLoading, isError } = useFetching({
+  const { data, isLoading, isError, refetch } = useFetching({
     title: "get all courses",
     endPoint: "courses",
   });
@@ -75,7 +75,7 @@ const AllCourses = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredCourses?.map((course) => (
               <Grid key={course.id} item xs={12} sm={6} md={4} lg={3}>
-                <Card course={course} />
+                <Card course={course} refetch={refetch} />
               </Grid>
             ))}
           </div>

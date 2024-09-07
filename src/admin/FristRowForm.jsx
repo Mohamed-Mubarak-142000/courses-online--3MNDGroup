@@ -4,7 +4,7 @@ import TextInput from "../common/TextInput";
 const FristRowForm = ({ name, setName, price, setPrice }) => {
   return (
     <div className="flex items-center gap-5 flex-wrap w-full justify-between">
-      <div className="w-[48%]">
+      <div className="lg:w-[48%] w-full">
         <TextInput
           label="Name"
           onChange={(e) => setName(e.target.value)}
@@ -14,7 +14,7 @@ const FristRowForm = ({ name, setName, price, setPrice }) => {
           required
         />
       </div>
-      <div className="w-[48%]">
+      <div className="lg:w-[48%] w-full">
         <TextInput
           label="Price"
           onChange={(e) => setPrice(e.target.value)}
